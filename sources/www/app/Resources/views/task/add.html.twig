@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <form method="POST" action="{{ path('app_product_create') }}">
+        <div><label>Title: <input name="title" type="text" /></label></div>
+        <div><label>Time: <input name="time" type="datetime" /></label></div>
+        <div><input type="submit"/></div>
+    </form>
+{% endblock %}
