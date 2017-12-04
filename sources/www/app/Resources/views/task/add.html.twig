@@ -1,9 +1,8 @@
-{% extends '::base.html.twig' %}
+{% extends ':todolist:base.html.twig' %}
 
 {% block body %}
-    <form method="POST" action="{{ path('app_product_create') }}">
-        <div><label>Title: <input name="title" type="text" /></label></div>
-        <div><label>Time: <input name="time" type="datetime" /></label></div>
-        <div><input type="submit"/></div>
-    </form>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" />
+    {{ form_end(form) }}
 {% endblock %}

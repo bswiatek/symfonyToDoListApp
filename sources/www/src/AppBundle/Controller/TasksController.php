@@ -21,7 +21,7 @@ class TasksController extends Controller
     }
 
     /**
-     * @Route("/add")
+     * @Route("task/add")
      * @Method({"GET", "POST"})
      * @Template(":todolist:base.html.twig")
      */
@@ -31,7 +31,15 @@ class TasksController extends Controller
         $form = $this->createForm('AppBundle\Form\TaskType', $task);
         $form->handleRequest($request);
 
-        return $this->render('task/add', [
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($task);
+            $em->flush();
+
+            return $this->redirectToRoute('task_show', array('id' => $task->getId()));
+        }
+
+        return $this->render('task/add.html.twig', [
             'task' => $task,
             'form' => $form->createView(),
         ]);
