@@ -31,6 +31,11 @@ class TasksController extends Controller
         $form = $this->createForm('AppBundle\Form\TaskType', $task);
         $form->handleRequest($request);
 
+        $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->connect();
+        $connected = $em->getConnection()->isConnected();
+        echo $connected;
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($task);
