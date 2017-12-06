@@ -18,6 +18,12 @@ class TasksController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $tasks = $em
+            ->getRepository(Task::class)
+            ->findAll();
+
+        return $this->render(':task:list.html.twig', ['tasks' => $tasks]);
     }
 
     /**
@@ -31,17 +37,12 @@ class TasksController extends Controller
         $form = $this->createForm('AppBundle\Form\TaskType', $task);
         $form->handleRequest($request);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->getConnection()->connect();
-        $connected = $em->getConnection()->isConnected();
-        echo $connected;
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($task);
             $em->flush();
 
-            return $this->redirectToRoute('task_show', array('id' => $task->getId()));
+            return $this->redirect('/');
         }
 
         return $this->render('task/add.html.twig', [
