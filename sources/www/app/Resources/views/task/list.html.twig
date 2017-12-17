@@ -1,7 +1,10 @@
 {% extends ':todolist:base.html.twig' %}
 
 {% block body %}
-    {% for task in tasks %}
-        <p>{{ task.time|date('Y-m-d H:i') }} | {{ task.title }}</p>
-    {% endfor %}
+    <div><a href="{{ path('add-task') }}">Add new task</a></div>
+    <div>
+        {% for task in tasks %}
+            <p>{{ task.time|date('Y-m-d H:i') }} | {{ task.title }}</p>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -27,7 +27,7 @@ class TasksController extends Controller
     }
 
     /**
-     * @Route("task/add")
+     * @Route("task/add", name="add-task")
      * @Method({"GET", "POST"})
      * @Template(":todolist:base.html.twig")
      */
