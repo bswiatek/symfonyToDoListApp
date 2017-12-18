@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class TasksController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="list-tasks")
      * @Template(":todolist:base.html.twig")
      */
     public function indexAction(Request $request)
@@ -49,5 +49,28 @@ class TasksController extends Controller
             'task' => $task,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("task/done/{id}", name="markdone-task")
+     * @Method({"POST", "GET"})
+     */
+    public function doneAction($id)
+    {
+        $task = $this
+            ->getDoctrine()
+            ->getRepository(Task::class)
+            ->find($id);
+
+        if(!$task) {
+            throw new \Exception('Task not found.');
+        }
+
+        $task->markDone(true);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('list-tasks');
     }
 }

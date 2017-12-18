@@ -27,6 +27,11 @@ class Task
      */
     private $time;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $done = false;
+
     public function getTitle()
     {
         return $this->title;
@@ -50,5 +55,15 @@ class Task
     public function getId()
     {
         return $this->id;
+    }
+
+    public function markDone($done)
+    {
+        $this->done = $done;
+    }
+
+    public function isDone()
+    {
+        return $this->done;
     }
 }
