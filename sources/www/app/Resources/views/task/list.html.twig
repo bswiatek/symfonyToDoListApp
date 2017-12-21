@@ -9,8 +9,12 @@
                 <p {% if task.done %}style="color: green"{% endif %}>
                     {{ task.time|date('Y-m-d') }} - <strong>{{ task.title }}</strong>
                 </p>
-                {% if task.done %}
+                {% if not task.done %}
                     <a href="{{ path('markdone-task', {'id': task.id}) }}">done</a>
+                {% endif %}
+                {% if task.done %}
+                    <a href="{{ path('markundone-task', {'id': task.id}) }}">undone</a>
+                    <a href="{{ path('remove-task', {'id': task.id}) }}">remove</a>
                 {% endif %}
             </div>
         {% endfor %}

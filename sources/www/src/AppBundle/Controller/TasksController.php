@@ -73,4 +73,49 @@ class TasksController extends Controller
 
         return $this->redirectToRoute('list-tasks');
     }
+
+    /**
+     * @Route("task/undone/{id}", name="markundone-task")
+     * @Method({"POST", "GET"})
+     */
+    public function undoneAction($id)
+    {
+        $task = $this
+            ->getDoctrine()
+            ->getRepository(Task::class)
+            ->find($id);
+
+        if(!$task) {
+            throw new \Exception('Task not found.');
+        }
+
+        $task->markDone(false);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('list-tasks');
+    }
+
+    /**
+     * @Route("task/remove/{id}", name="remove-task")
+     * @Method({"POST", "GET"})
+     */
+    public function removeAction($id)
+    {
+        $task = $this
+            ->getDoctrine()
+            ->getRepository(Task::class)
+            ->find($id);
+
+        if(!$task) {
+            throw new \Exception('Task not found.');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($task);
+        $em->flush();
+
+        return $this->redirectToRoute('list-tasks');
+    }
 }
